@@ -23,18 +23,18 @@ const Socials: React.FC = () => {
       icon: <FaGithub className="w-12 h-12" />,
     },
     {
+      platform: 'LinkedIn',
+      url: 'https://linkedin.com/in/satyam-srivastava-089622325',
+      icon: <FaLinkedin className="w-12 h-12" />,
+    },
+    {
       platform: 'Instagram',
       url: 'https://instagram.com/srivastava8815',
       icon: <FaInstagram className="w-12 h-12" />,
     },
     {
-      platform: 'LinkedIn',
-      url: 'https://linkedin.com/in/',
-      icon: <FaLinkedin className="w-12 h-12" />,
-    },
-    {
       platform: 'Twitter',
-      url: 'https://twitter.com/yourusername',
+      url: 'https://x.com/satyamsri1712?s=11',
       icon: <FaXTwitter className="w-12 h-12" />,
     },
   ];

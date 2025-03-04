@@ -48,7 +48,7 @@ const Navbar = () => {
             <button
               onClick={() => {
                 const link = document.createElement('a');
-                link.href = '/downloadCv/Satyam_Srivastava_Resume.pdf';
+                link.href = `${process.env.NEXT_PUBLIC_BASE_PATH || '/portfolio'}/downloadCv/Satyam_Srivastava_Resume.pdf`;
                 link.setAttribute('download', 'Satyam_Srivastava_Resume.pdf');
                 link.setAttribute('target', '_blank');
                 link.setAttribute('rel', 'noopener noreferrer');
@@ -68,7 +68,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               const link = document.createElement('a');
-              link.href = '/downloadCv/Satyam_Srivastava_Resume.pdf';
+              link.href = `${process.env.NEXT_PUBLIC_BASE_PATH || '/portfolio'}/downloadCv/Satyam_Srivastava_Resume.pdf`;
               link.setAttribute('download', 'Satyam_Srivastava_Resume.pdf');
               link.setAttribute('target', '_blank');
               link.setAttribute('rel', 'noopener noreferrer');
