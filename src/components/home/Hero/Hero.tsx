@@ -13,7 +13,24 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [imageHeight, setImageHeight] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    // Check if we're on mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is typical md breakpoint
+    };
+
+    // Check initially
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -21,11 +38,12 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
     }
   }, []);
 
-  const nameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, 0]);
-  const nameX = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, -200]);
-  const nameY = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, -50]);
-  const nameScale = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, 0.8]);
-  const staticNameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, 0.3]);
+  // Only apply scroll transforms if not on mobile
+  const nameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, isMobile ? 1 : 0]);
+  const nameX = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, isMobile ? 0 : -200]);
+  const nameY = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, isMobile ? 0 : -50]);
+  const nameScale = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, isMobile ? 1 : 0.8]);
+  const staticNameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, isMobile ? 0 : 0.3]);
 
   return (
     <div ref={heroRef} className="min-h-screen bg-black flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
@@ -35,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
           {/* Avatar Section */}
           <motion.div
             ref={imageRef}
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
               type: "spring",
@@ -59,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
 
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-center md:text-left space-y-4 md:space-y-6"
@@ -67,18 +85,18 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
             <div className="text-base sm:text-lg text-white/90 mb-1">
               Hello! I&apos;m{" "}
               <span className="relative inline-block">
-                {/* Static name that appears as trace */}
-                <motion.span
-                  style={{ opacity: staticNameOpacity }}
-                  className="absolute inset-0 z-0"
-                >
-                  <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent opacity-30">
-                    {name}
-                  </span>
-                </motion.span>
-                {/* Animated name that transitions to navbar */}
+                {!isMobile && (
+                  <motion.span
+                    style={{ opacity: staticNameOpacity }}
+                    className="absolute inset-0 z-0"
+                  >
+                    <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent opacity-30">
+                      {name}
+                    </span>
+                  </motion.span>
+                )}
                 <motion.span 
-                  style={{ 
+                  style={isMobile ? {} : { 
                     opacity: nameOpacity,
                     x: nameX,
                     y: nameY,
@@ -95,7 +113,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="space-y-3 md:space-y-4"
