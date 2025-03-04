@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 const technologies = [
@@ -19,13 +19,35 @@ const technologies = [
   { name: 'MongoDB', icon: '/images/techstack/mongodb.png' },
   { name: 'MySQL', icon: '/images/techstack/mysql.png' },
   { name: 'Python', icon: '/images/techstack/python.png' },
-
 ];
 
 const TechStack = () => {
+  const [position, setPosition] = useState(0);
+
+  useEffect(() => {
+    const animationDuration = 20000; // 20 seconds
+    let startTime: number;
+    let animationFrameId: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = ((timestamp - startTime) % animationDuration) / animationDuration;
+      setPosition(-50 * progress); // Move from 0% to -50%
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, []);
+
   return (
     <section className="py-20 bg-[#0A0A0F]">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto ">
         {/* Heading Section */}
         <h2 className="text-5xl text-center text-white mb-3">
           Tech Stack
@@ -41,22 +63,17 @@ const TechStack = () => {
 
         {/* Infinite Scroll Container */}
         <div className="overflow-hidden py-10">
-          <motion.div
-            initial={{ x: "0%" }}
-            animate={{ x: "-50%" }}
-            transition={{
-              x: {
-                duration: 20,
-                repeat: Infinity,
-                repeatType: "loop",
-                ease: "linear",
-              },
-            }}
+          <div
             className="flex gap-8 w-fit"
+            style={{
+              transform: `translateX(${position}%)`,
+              transition: 'transform linear',
+              willChange: 'transform'
+            }}
           >
             {/* First set of icons */}
             {technologies.map((tech) => (
-              <motion.div
+              <div
                 key={`first-${tech.name}`}
                 className="flex-shrink-0 relative group"
               >
@@ -72,12 +89,12 @@ const TechStack = () => {
                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                   {tech.name}
                 </div>
-              </motion.div>
+              </div>
             ))}
             
             {/* Duplicate set for seamless loop */}
             {technologies.map((tech) => (
-              <motion.div
+              <div
                 key={`second-${tech.name}`}
                 className="flex-shrink-0 relative group"
               >
@@ -93,9 +110,9 @@ const TechStack = () => {
                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                   {tech.name}
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

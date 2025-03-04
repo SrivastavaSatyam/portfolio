@@ -1,40 +1,40 @@
 'use client';
 
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {
-  const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const updateScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      setScrollProgress(Math.min(window.scrollY / 50, 1));
     };
 
     window.addEventListener('scroll', updateScroll);
     return () => window.removeEventListener('scroll', updateScroll);
   }, []);
 
-  const navNameOpacity = useTransform(scrollY, [0, 50], [0, 1]);
-  const navNameX = useTransform(scrollY, [0, 50], [100, 0]);
-  const navNameY = useTransform(scrollY, [0, 50], [25, 0]);
+  const navNameOpacity = scrollProgress;
+  const navNameX = 100 * (1 - scrollProgress);
+  const navNameY = 25 * (1 - scrollProgress);
 
   return (
-    <motion.nav 
+    <nav 
       className={`fixed w-full z-50 backdrop-blur-sm transition-all duration-300 ${
         isScrolled ? 'border-b border-border' : 'border-transparent'
       }`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <motion.div
+          <div
             style={{ 
               opacity: navNameOpacity,
-              x: navNameX,
-              y: navNameY,
-              transformOrigin: 'left center'
+              transform: `translate(${navNameX}px, ${navNameY}px)`,
+              transformOrigin: 'left center',
+              transition: 'opacity 0.3s, transform 0.3s'
             }}
           >
             <Link href="/">
@@ -42,7 +42,7 @@ const Navbar = () => {
                 Satyam Srivastava
               </div>
             </Link>
-          </motion.div>
+          </div>
           
           <div className="hidden md:flex space-x-8">
             <button
@@ -85,8 +85,8 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   )
 }
 
-export default Navbar 
+export default Navbar; 

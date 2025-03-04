@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { FaGithub, FaInstagram, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 
 interface SocialLink {
@@ -11,6 +10,12 @@ interface SocialLink {
 }
 
 const Socials: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   const socialLinks: SocialLink[] = [
     {
       platform: 'GitHub',
@@ -38,10 +43,12 @@ const Socials: React.FC = () => {
     <div id="socials">
       <section className="w-full  bg-black text-white py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: `translateY(${isVisible ? 0 : 20}px)`,
+              transition: 'opacity 0.5s, transform 0.5s'
+            }}
           >
             <h2 className="text-5xl text-center text-white mb-3">
               Socials
@@ -72,7 +79,7 @@ const Socials: React.FC = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

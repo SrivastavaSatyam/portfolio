@@ -8,19 +8,12 @@ const nextConfig = {
   ...(isProduction && {
     output: 'export',
     distDir: 'build',
-    assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || basePath
   }),
   experimental: {
     webpackBuildWorker: true,
   },
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
   },
   webpack: (config) => {
     config.module.rules.push({

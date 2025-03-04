@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface RecognitionProps {
   title: string;
@@ -11,12 +11,40 @@ interface RecognitionProps {
 }
 
 const RecognitionCard: React.FC<RecognitionProps> = ({ title, imageUrl, date, organization }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById(title.replace(/\s+/g, '-').toLowerCase());
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [title]);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className=" border-2 border-gray-800 shadow-[0_0_10px_rgba(168,85,247,0.4)] rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 w-[300px]"
+    <div
+      id={title.replace(/\s+/g, '-').toLowerCase()}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: `translateY(${isVisible ? 0 : 20}px)`,
+        transition: 'opacity 0.5s, transform 0.5s'
+      }}
+      className="border-2 border-gray-800 shadow-[0_0_10px_rgba(168,85,247,0.4)] rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 w-[300px]"
     >
       <div className="flex flex-col h-full">
         <div className="relative w-[220px] h-[220px] mx-auto">
@@ -44,11 +72,17 @@ const RecognitionCard: React.FC<RecognitionProps> = ({ title, imageUrl, date, or
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const Recognition: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   const recognitionData: RecognitionProps[] = [
     {
       title: "ROCKSTAR OF THE MONTH",
@@ -67,10 +101,12 @@ const Recognition: React.FC = () => {
   return (
     <section id="awards" className="py-20 bg-black">
       <div className="w-full max-w-6xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: `translateY(${isVisible ? 0 : 20}px)`,
+            transition: 'opacity 0.5s, transform 0.5s'
+          }}
           className="flex flex-col items-center"
         >
           <h2 className="text-5xl text-center text-white mb-3">
@@ -88,7 +124,7 @@ const Recognition: React.FC = () => {
               <RecognitionCard key={index} {...recognition} />
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

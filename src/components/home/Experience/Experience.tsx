@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface Position {
   title: string;
@@ -84,10 +83,8 @@ const Experience: React.FC = () => {
   return (
     <section className="w-full min-h-screen bg-black text-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
+          className="animate-fade-in opacity-0 translate-y-5 animate-[fade-in_0.5s_ease-in-out_forwards]"
         >
           <h2 className="text-5xl text-center text-white mb-3">
             Experience
@@ -167,7 +164,7 @@ const Experience: React.FC = () => {
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
         <div className="mt-8 text-sm text-gray-400 italic">
           * Download CV for a more detailed overview of my professional experience
         </div>
