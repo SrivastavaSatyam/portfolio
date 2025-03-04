@@ -45,44 +45,28 @@ const Navbar = () => {
           </div>
           
           <div className="hidden md:flex space-x-8">
-            <button
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = `${process.env.NEXT_PUBLIC_BASE_PATH || '/portfolio'}/downloadCv/Satyam_Srivastava_Resume.pdf`;
-                link.setAttribute('download', 'Satyam_Srivastava_Resume.pdf');
-                link.setAttribute('target', '_blank');
-                link.setAttribute('rel', 'noopener noreferrer');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
+            <a
+              href="/downloadCv/satyam-srivastava-resume.pdf"
+              download="satyam-srivastava-resume.pdf"
               className="text-foreground/80 border rounded-md bg-white text-black px-4 py-2 hover:bg-gray-100 transition-colors inline-flex items-center"
               aria-label="Download CV"
             >
               Download CV <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
-            </button>
+            </a>
           </div>
 
-          <button
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = `${process.env.NEXT_PUBLIC_BASE_PATH || '/portfolio'}/downloadCv/Satyam_Srivastava_Resume.pdf`;
-              link.setAttribute('download', 'Satyam_Srivastava_Resume.pdf');
-              link.setAttribute('target', '_blank');
-              link.setAttribute('rel', 'noopener noreferrer');
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}
+          <a
+            href="/downloadCv/satyam-srivastava-resume.pdf"
+            download="satyam-srivastava-resume.pdf"
             className="md:hidden text-foreground/80 border rounded-md bg-white text-black px-4 py-2 hover:bg-gray-100 transition-colors inline-flex items-center"
             aria-label="Download CV"
           >
             Download CV <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 ml-1">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </nav>
