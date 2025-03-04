@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint && eslint .",
+    "build": "yarn clean && yarn lint && next build",
+    "clean": "rm -rf .next && rm -rf build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

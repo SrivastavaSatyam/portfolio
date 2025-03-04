@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HeroProps } from "./types/types";
 import Image from "next/image";
@@ -10,20 +10,31 @@ import Image from "next/image";
  * @component
  */
 const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [imageHeight, setImageHeight] = useState(0);
   const { scrollY } = useScroll();
-  const nameOpacity = useTransform(scrollY, [0, 50], [1, 0]);
-  const nameX = useTransform(scrollY, [0, 50], [0, -200]);
-  const nameY = useTransform(scrollY, [0, 50], [0, -50]);
-  const nameScale = useTransform(scrollY, [0, 50], [1, 0.8]);
-  const staticNameOpacity = useTransform(scrollY, [0, 50], [0, 0.3]);
+
+  useEffect(() => {
+    if (imageRef.current) {
+      setImageHeight(imageRef.current.offsetHeight);
+    }
+  }, []);
+
+  const nameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, 0]);
+  const nameX = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, -200]);
+  const nameY = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, -50]);
+  const nameScale = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [1, 0.8]);
+  const staticNameOpacity = useTransform(scrollY, [imageHeight * 0.25, imageHeight * 0.75], [0, 0.3]);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
+    <div ref={heroRef} className="min-h-screen bg-black flex items-center justify-center px-4 py-12 sm:py-16 md:py-20">
       <div className="max-w-6xl w-full mx-auto">
         {/* Main Content */}
         <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] lg:grid-cols-[300px_1fr] gap-8 md:gap-12 items-center">
           {/* Avatar Section */}
           <motion.div
+            ref={imageRef}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
@@ -91,7 +102,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
             >
               <p className="text-lg sm:text-xl text-white/80">A Software Engineer</p>
               <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white leading-tight">
-                who&apos;s passionate about building{" "}
+                passionate about building{" "}
                 <span className="text-purple-400 relative inline-block">
                   exceptional
                   <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-purple-400/50"></span>
@@ -102,12 +113,12 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
           </motion.div>
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           className="pt-8 sm:pt-12 md:pt-16 text-center md:text-left max-w-3xl mx-auto"
-        >
+        > */}
           {/* <div className="space-y-4">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
@@ -130,7 +141,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
               delivering high-quality solutions that exceed expectations.
             </motion.p>
           </div> */}
-        </motion.div>
+        {/* </motion.div> */}
       </div>
     </div>
   );
