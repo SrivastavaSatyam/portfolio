@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { HeroProps } from "./types/types";
 import Image from "next/image";
+import { getImagePath } from "@/src/utils/imageLoader";
 
 /**
  * Hero section component for the landing page
@@ -42,7 +43,7 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
           >
             <div className="relative rounded-full overflow-hidden">
               <Image
-                src="/images/MetaPerson-avatar.png"
+                src={getImagePath("/images/MetaPerson-avatar.png")}
                 alt="Developer Avatar"
                 width={300}
                 height={300}

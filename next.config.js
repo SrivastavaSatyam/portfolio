@@ -1,13 +1,14 @@
 /** @type {import('next').NextConfig} */
 
 const isProduction = process.env.NODE_ENV === 'production';
-const basePath = isProduction ? '/portfolio' : '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/portfolio';
 
 const nextConfig = {
-  basePath,
+  basePath: isProduction ? basePath : '',
   ...(isProduction && {
     output: 'export',
     distDir: 'build',
+    assetPrefix: basePath,
   }),
   experimental: {
     webpackBuildWorker: true,

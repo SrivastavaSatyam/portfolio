@@ -1,8 +1,8 @@
 'use client'
 
-
 import Image from 'next/image'
 import { useState } from 'react'
+import { getImagePath } from '@/src/utils/imageLoader'
 
 interface Project {
   title: string
@@ -79,7 +79,7 @@ export default function Projects() {
               )}
               <div className={`flex-none md:w-52 bg-white rounded-lg flex items-center justify-center p-4 ${project.featured ? 'ring-2 ring-yellow-500/30' : ''}`}>
                 <Image
-                  src={project.logo}
+                  src={getImagePath(project.logo)}
                   alt={`${project.title} logo`}
                   width={160}
                   height={160}
@@ -119,7 +119,7 @@ export default function Projects() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 p-2 bg-white rounded-lg flex items-center justify-center">
                   <Image
-                    src={selectedProject.logo}
+                    src={getImagePath(selectedProject.logo)}
                     alt={selectedProject.title}
                     width={64}
                     height={64}
@@ -140,7 +140,7 @@ export default function Projects() {
                   {selectedProject.images.map((image, index) => (
                     <div key={index} className="relative aspect-video rounded-lg overflow-hidden">
                       <Image
-                        src={image}
+                        src={getImagePath(image)}
                         alt={`${selectedProject.title} screenshot ${index + 1}`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

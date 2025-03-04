@@ -84,7 +84,7 @@ const Experience: React.FC = () => {
     <section className="w-full min-h-screen bg-black text-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="animate-fade-in opacity-0 translate-y-5 animate-[fade-in_0.5s_ease-in-out_forwards]"
+          className="animate-fade-in translate-y-5 animate-[fade-in_0.5s_ease-in-out_forwards]"
         >
           <h2 className="text-5xl text-center text-white mb-3">
             Experience

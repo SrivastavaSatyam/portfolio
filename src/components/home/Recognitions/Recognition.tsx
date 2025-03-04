@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { getImagePath } from '@/src/utils/imageLoader';
 
 interface RecognitionProps {
   title: string;
@@ -40,7 +41,6 @@ const RecognitionCard: React.FC<RecognitionProps> = ({ title, imageUrl, date, or
     <div
       id={title.replace(/\s+/g, '-').toLowerCase()}
       style={{
-        opacity: isVisible ? 1 : 0,
         transform: `translateY(${isVisible ? 0 : 20}px)`,
         transition: 'opacity 0.5s, transform 0.5s'
       }}
@@ -49,7 +49,7 @@ const RecognitionCard: React.FC<RecognitionProps> = ({ title, imageUrl, date, or
       <div className="flex flex-col h-full">
         <div className="relative w-[220px] h-[220px] mx-auto">
           <Image
-            src={imageUrl}
+            src={getImagePath(imageUrl)}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -103,7 +103,6 @@ const Recognition: React.FC = () => {
       <div className="w-full max-w-6xl mx-auto px-4">
         <div
           style={{
-            opacity: isVisible ? 1 : 0,
             transform: `translateY(${isVisible ? 0 : 20}px)`,
             transition: 'opacity 0.5s, transform 0.5s'
           }}

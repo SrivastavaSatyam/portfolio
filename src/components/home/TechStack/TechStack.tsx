@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { getImagePath } from '@/src/utils/imageLoader';
 
 const technologies = [
   { name: 'Figma', icon: '/images/techstack/figma.png' },
@@ -79,7 +80,7 @@ const TechStack = () => {
               >
                 <div className="w-16 h-16 rounded-full bg-[#cfcfd2] flex items-center justify-center p-3">
                   <Image
-                    src={tech.icon}
+                    src={getImagePath(tech.icon)}
                     alt={tech.name}
                     width={50}
                     height={50}
@@ -100,7 +101,7 @@ const TechStack = () => {
               >
                 <div className="w-16 h-16 rounded-full bg-[#cfcfd2] flex items-center justify-center p-3">
                   <Image
-                    src={tech.icon}
+                    src={getImagePath(tech.icon)}
                     alt={tech.name}
                     width={50}
                     height={50}
