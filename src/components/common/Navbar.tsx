@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { getImagePath } from "@/src/utils/imageLoader";
+
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,7 +48,7 @@ const Navbar = () => {
           
           <div className="hidden md:flex space-x-8">
             <a
-              href="/downloadCv/satyam-srivastava-resume.pdf"
+              href={getImagePath("/downloadCv/satyam-srivastava-resume.pdf")}
               download="satyam-srivastava-resume.pdf"
               className="text-foreground/80 border rounded-md bg-white text-black px-4 py-2 hover:bg-gray-100 transition-colors inline-flex items-center"
               aria-label="Download CV"
@@ -58,7 +60,7 @@ const Navbar = () => {
           </div>
 
           <a
-            href="/downloadCv/satyam-srivastava-resume.pdf"
+            href={getImagePath("/downloadCv/satyam-srivastava-resume.pdf")}
             download="satyam-srivastava-resume.pdf"
             className="md:hidden text-foreground/80 border rounded-md bg-white text-black px-4 py-2 hover:bg-gray-100 transition-colors inline-flex items-center"
             aria-label="Download CV"
