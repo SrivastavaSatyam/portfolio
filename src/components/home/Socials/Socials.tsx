@@ -34,7 +34,7 @@ const Socials: React.FC = () => {
     },
     {
       platform: 'Twitter',
-      url: 'https://x.com/satyamsri1712?s=11',
+      url: 'https://x.com/satyamsri1712',
       icon: <FaXTwitter className="w-12 h-12" />,
     },
   ];

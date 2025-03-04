@@ -43,11 +43,11 @@ const Hero: React.FC<HeroProps> = ({ name = "Satyam Srivastava" }) => {
           >
             <div className="relative rounded-full overflow-hidden">
               <Image
-                src={getImagePath("/images/MetaPerson-avatar.png")}
+                src={getImagePath("/images/main.png")}
                 alt="Developer Avatar"
                 width={300}
                 height={300}
-                className="w-full h-auto"
+                className="w-full h-auto rounded-full border-2 border-purple-400"
                 priority
               />
             </div>
